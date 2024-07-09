@@ -172,7 +172,7 @@ def prompt():
 	#Above is just looking nice
 	action = input(">")
 	while action.lower() not in acceptable_actions:
-			print("Unknown action try again. \n")
+			print("Unknown prompt action try again.\n")
 			action = input(">")
 	if action.lower() in ['quit', 'exit','q']:
 		sys.exit()#player quit
@@ -214,7 +214,7 @@ def player_move(myAction):
 		print("\nWould you like to exit this room? y/n\n")
 		exitroom = input(">")
 		while exitroom.lower() not in yesno:
-			print("Unknown action try again.")
+			print("Unknown exit action try again.")
 			prompt()
 		if exitroom.lower() in yes:
 			destination = 'S1'
@@ -259,18 +259,21 @@ def setup_game():
 	display_speech("Hello, what's your name?\n", 0.05)
 	player_name = input(">")
 	myPlayer.name = player_name
-	'''display_speech(player_name + ", is that right? y/n\n")
 	while True:
+		display_speech(player_name + ", is that right? y/n\n")
 		response_name = input(">")
 		if response_name.lower() in yes:
 			myPlayer.name = player_name
+			break
 		elif response_name.lower() in no:
 			print("Okay, what's your name, then?")
-			response_name = input(">")
-		print("Unknown action try again.")'''
+			player_name = input(">")
+			myPlayer.name = player_name
+		elif response_name.lower() not in yesno:
+			print("Unknown name action try again.")
 
  #### Job handling ####
-	display_speech("Hello, what's your job?\n", 0.05)
+	display_speech("Lovely name, what's your job?\n", 0.05)
 	display_speech("(You can be a 1, 2, or 3.)\n", 0.05)
 	valid_jobs = {
 		'1': (120, 20),
@@ -284,8 +287,9 @@ def setup_game():
 			myPlayer.job = player_job.lower()
 			myPlayer.hp, myPlayer.fp = valid_jobs[myPlayer.job]
 			break
-		print(f"Silly that's not a job; valid jobs are {sorted(valid_jobs.keys())}")
-
+		else:
+			print(f"Silly that's not a job; valid jobs are {sorted(valid_jobs.keys())}")
+		
 	print("Excellent, I am sure you will make a wonderful " + player_job + ".\n")
 
 	####Introduction
